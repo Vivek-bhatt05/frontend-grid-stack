@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { GridStack } from 'gridstack';
 import 'gridstack/dist/gridstack.css';
 import 'gridstack/dist/gridstack.min.css';
@@ -6,9 +6,24 @@ import 'gridstack/dist/gridstack-extra.min.css';
 
 const GridStackComponent=()=> {
 
+    const [widgets, setWidgets] = useState([]);
+
     useEffect(() => {
         var grid = GridStack.init();
     });
+
+
+    const fetchWidgets = async () => {
+    try {
+        const response = await fetch('http://localhost:4000/widgets'); 
+        const data = await response.json();
+        console.log(data)
+        return data;
+      } catch (error) {
+        console.error('Error fetching widgets:', error);
+        return [];
+      }
+     };
 
     return (
         <div className="App">
